@@ -134,11 +134,12 @@ class Client {
 				username: username,
 				count: 1,
 				time: new Date().getTime(),
+        disconnectTime: 0,
 				role: 'participant',
 				status: 'Viewer',
         watching: true
 			};
-			users[ username ] = userObj;
+			users[username] = userObj;
 			runtime.brain.set( 'users', users );
 		}
 
@@ -226,14 +227,17 @@ class Client {
   		// the last 5 minutes.
   		const now = new Date().getTime();
   		const minutes = 5;
-  		if ( now - user.lastVisitTime > 1000 * 60 * minutes ) {
+  		if (now - user.lastVisitTime > 1000 * 60 * minutes) {
   			user.viewCount++;
   			user.lastVisitTime = now;
   		}
 
   		// If presence is unavailable set watching to false
   		if (message === 'unavailable')
+      {
         user.watching = false;
+        user.disconnectTime = new Date().getTime();
+      }
       else
         user.watching = true;
 

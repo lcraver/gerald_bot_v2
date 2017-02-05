@@ -18,7 +18,7 @@ module.exports = [{
 		chat.sendMessage(`${stanza.user.username} is set to: ${ statusObj.title }`);
     }
 }, {
-	name: '!getstatus {username}',
+	name: '!status {username}',
 	help: 'Returns the status of the specified user.',
     types: ['message'],
     regex: getStatusRegex,

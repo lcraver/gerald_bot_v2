@@ -152,29 +152,45 @@ h2 {
 }
 
 .bar-graph {
-  background: white;
   border-radius: 3px;
   position: relative;
   display: block;
   clear: both;
   height: 200px;
+  border-radius: 3px;
+  background: #E0E0E0;
 }
 
 .bar-graph div {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: yellow;
 }
 
 .bar-graph div .graph-bar {
-  background: red;
+  background: #FF7043;
   width: 50%;
   display: block;
   margin: auto 25% 0;
   text-align: center;
+  border-radius: 3px 3px 0 0;
 }
 
 .bar-graph div:first-child {
   padding-left: 0;
+}
+
+.bar-graph-names {
+  display: block;
+  position: relative;
+  height: 24px;
+}
+
+.bar-graph-names div {
+  display: block;
+  position: absolute;
+  line-height: 24px;
+  overflow-x: hidden;
+  text-align: center;
+  margin: 0 8px;
 }

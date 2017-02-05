@@ -49,7 +49,7 @@ module.exports = [{
 	name: 'Chat',
 	help: 'Captures messages to gerald and chats with user.',
   types: ['message'],
-  regex: new RegExp(RegExp.escape(geraldChatReplace) + "|" + RegExp.escape(pluginSettings.bot_name)),
+  regex: new RegExp(RegExp.escape(geraldChatReplace) + "|" + RegExp.escape(runtime.credentials.username)),
   action: function( chat, stanza ) {
 		let user = stanza.user.username;
 		let userMessage = stanza.message.replace(geraldChatReplace, '');

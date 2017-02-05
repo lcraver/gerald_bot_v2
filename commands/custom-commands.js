@@ -11,42 +11,62 @@
  */
 const runtime = require('../utils/Runtime');
 
-let addCommandRegex = new RegExp( /^(!|\/)addcommand\s(\w+)\s((.|\n)+)$/ );
-let removeCommandRegex = new RegExp( /^(!|\/)removecommand\s(\w+)$/ );
+let addCommandRegex = new RegExp( /^!addcommand\s(\w+)\s((.|\n)+)$/ );
+let removeCommandRegex = new RegExp( /^!removecommand\s(\w+)$/ );
 let runCommandRegex = new RegExp( /^(!|\/)(\w+)$/ );
 
 module.exports = [{
-	// Run custom command
+    // List custom commands
+    types: ['interface'],
+    action: function(api) {
+
+      api.get('/customCommands', function(req, res)
+  		{
+        let customCommands = runtime.brain.get('customCommands') || {};
+  			res.send(customCommands);
+  		});
+    }
+},
+{
+  	// Run custom command
     types: ['message'],
     regex: runCommandRegex,
     action: function( chat, stanza ) {
-		let match = runCommandRegex.exec( stanza.message );
-		let command = match[2];
-		let customCommands = runtime.brain.get('customCommands') || {};
-		let commandValue = customCommands[ command ];
+  		let match = runCommandRegex.exec( stanza.message );
+  		let command = match[2];
+  		let customCommands = runtime.brain.get('customCommands') || {};
+  		let commandValue = customCommands[ command ];
 
-		if ( commandValue ) {
-			chat.sendMessage( commandValue );
-		}
+  		if ( commandValue ) {
+  			chat.sendMessage( commandValue );
+  		}
     }
-}, {
+},
+{
 	// Add custom command
 	name: '!addcommand {command} {output}',
 	help: 'Adds a new command to the bot (Mod only).',
     types: ['message'],
     regex: addCommandRegex,
     action: function( chat, stanza ) {
-        if ( stanza.user.isModerator() ) {
-			let match = addCommandRegex.exec( stanza.message );
-			let command = match[2];
-			let commandValue = match[3];
-			let customCommands = runtime.brain.get('customCommands') || {};
 
-			customCommands[ command ] = commandValue;
-			runtime.brain.set( 'customCommands', customCommands );
+      console.log(stanza.user);
+      console.log(stanza.message);
 
-			chat.replyTo( stanza.user.username, `!${command} added!` );
-		}
+      if (stanza.user.isModerator() || stanza.user.isStreamer()) {
+
+        console.log("Adding command!");
+
+  			let match = addCommandRegex.exec( stanza.message );
+  			let command = match[2];
+  			let commandValue = match[3];
+  			let customCommands = runtime.brain.get('customCommands') || {};
+
+  			customCommands[ command ] = commandValue;
+  			runtime.brain.set( 'customCommands', customCommands );
+
+  			chat.replyTo( stanza.user.username, `!${command} added!` );
+		  }
     }
 }, {
 	// Remove custom command

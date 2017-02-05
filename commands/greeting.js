@@ -6,6 +6,7 @@
  */
 
 const runtime = require('../utils/Runtime');
+const Say = require('../utils/Say');
 const Settings = require('../utils/Settings');
 const Templater = require('../utils/Templater');
 
@@ -54,19 +55,26 @@ module.exports = [{
 	types: ['presence'],
 	regex: /^available$/,
 	action: function( chat, stanza ) {
-    if ( stanza.user.isStreamer() || stanza.user.isBot() ) {
-        return; // Don't greet the streamer or the bot
-    }
+    if (stanza.user.isStreamer() || stanza.user.isBot())
+    	return; // Don't greet the streamer or the bot
+
+		console.log((new Date()).getTime() - stanza.user.disconnectTime);
+		console.log((new Date()).getTime() + " - " + stanza.user.disconnectTime);
+
+		if(stanza.user.disconnectTime != null && stanza.user.disconnectTime != 0)
+			if((new Date()).getTime() - stanza.user.disconnectTime <= 1000 * 60 * 5)
+				return; // Don't greet unless it's been more then 30 minutes.
 
 		let viewerType = stanza.user.viewCount > 1 ? 'existing' : 'new';
-		let availableGreetings = findAvailableGreetings( viewerType, stanza.user.status );
-		let greeting = getRandomGreeting( availableGreetings );
+		let availableGreetings = findAvailableGreetings(viewerType, stanza.user.status);
+		let greeting = getRandomGreeting(availableGreetings);
 
-    greeting = Templater.run( greeting, {
+    greeting = Templater.run(greeting, {
         username: stanza.user.username,
         status: stanza.user.status
-    } );
+    });
 
-		chat.replyTo( stanza.user.username, greeting );
+		chat.replyTo(stanza.user.username, greeting);
+		Say.say(stanza.user.username + " has joined the stream.", "Zira");
   }
 }];

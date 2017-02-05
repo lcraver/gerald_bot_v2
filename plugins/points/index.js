@@ -25,7 +25,7 @@ module.exports = [{
         for(let i = 0; i < usersInPoints.length; i++)
         {
           let user = usersInPoints[i];
-          if(user != runtime.credentials.username)
+          if(user != runtime.credentials.username && user != runtime.credentials.room)
             pointDataArray.push({
               user: user,
               points: pointData[user]

@@ -70,7 +70,7 @@ module.exports = [{
 					"status": userData[tmpUser].status,
 					"last_visit": userData[tmpUser].lastVisitTime
 				};
-				if(userData[tmpUser].watching)
+				if(userData[tmpUser].watching && tmpUser != runtime.credentials.username)
 					usersToReturn.push(tmpUserObj);
 			}
 

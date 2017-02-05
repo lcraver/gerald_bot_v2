@@ -11,7 +11,7 @@
 	"coreCommands": {
 		"ban-management": true,
 		"custom-commands": true,
-		"greeting": false,
+		"greeting": true,
 		"help": true,
 		"leaderboard": true,
 		"say": true,

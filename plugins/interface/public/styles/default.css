@@ -7,3 +7,26 @@ body {
   clear: both;
   font-family: 'Roboto', sans-serif;
 }
+
+.made-by {
+  position: fixed;
+  background-color: white;
+  bottom: 0;
+  left: 0;
+  width: 220px;
+  line-height: 24px;
+  height: 24px;
+}
+
+.made-by a {
+  text-decoration: none;
+  font-weight: 700;
+  color: black;
+  display: block;
+  padding: 0 8px;
+}
+
+.made-by a:hover {
+  color: white;
+  background: black;
+}
