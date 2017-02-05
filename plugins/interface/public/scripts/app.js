@@ -15,6 +15,7 @@ app.controller('geraldController', function ($rootScope, $scope, $http) {
   $rootScope.plugins = [];
   $rootScope.toasts = [];
   $rootScope.commands = [];
+  $rootScope.customCommands = [];
   $rootScope.points = [];
 
   $rootScope.startInterface = function () {
@@ -32,6 +33,15 @@ app.controller('geraldController', function ($rootScope, $scope, $http) {
       url: 'http://localhost:8000/commands/message'
     }).then(function successCallback(commandData) {
       $rootScope.commands = commandData.data;
+    }, function errorCallback(response) {
+      console.log(response);
+    });
+
+    $http({
+      method: 'GET',
+      url: 'http://localhost:8000/customCommands'
+    }).then(function successCallback(commandData) {
+      $rootScope.customCommands = commandData.data;
     }, function errorCallback(response) {
       console.log(response);
     });
