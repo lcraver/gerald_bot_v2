@@ -13,6 +13,13 @@
     "what's up",
     "hiya"
   ],
+  "farewell": [
+    "bye",
+    "later",
+    "ttyl",
+    "see you later",
+    "good night"
+  ],
   "interrogation": [
     "want to know",
     "tell me",

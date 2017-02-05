@@ -118,5 +118,13 @@
       "sad": "Hi.",
       "angry": "What do you want..."
     }
+  },
+  {
+    "pattern": ["farewell"],
+    "responses": {
+      "normal": "{{syn:farewell}}!",
+      "sad": "cya",
+      "angry": "..."
+    }
   }
 ]
