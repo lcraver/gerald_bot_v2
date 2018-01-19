@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const Log = require('./Log');
 const runtime = require('./Runtime');
 const User = require('../model/User');
+const tmi = require('tmi');
 
 class Client {
     /**

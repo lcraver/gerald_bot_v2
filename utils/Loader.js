@@ -124,14 +124,13 @@ class Loader {
 		});
 	}
 
-	static parseCommandIntoMessageTypes( command, commandObject ) {
+	static parseCommandIntoMessageTypes(command, commandObject) {
 		// Loop through each command so we can separate out
 		// each command type to its own array.
-		commandTypes.forEach( ( commandType ) => {
-			if ( command.types.indexOf( commandType ) >= 0 ) {
-				commandObject[ commandType ].push( command );
-			}
-		} );
+		commandTypes.forEach((commandType) => {
+			if (command.types.indexOf(commandType) >= 0)
+				commandObject[commandType].push(command);
+		});
 	}
 }
 
