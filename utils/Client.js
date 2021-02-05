@@ -117,6 +117,13 @@ class Client {
         });
     }
 
+		 onMessage(action) {
+			 this.listen((stanza) => {
+				 return action(Client.parseStanza(stanza));
+			 });
+		 }
+
+
     /**
      * Returns the user based on the specified username.
      * @param  {string} username
@@ -153,14 +160,14 @@ class Client {
 	 * @param  {obj} credentials
 	 * @return {obj}
      */
-    static parseStanza( stanza, credentials ) {
+    static parseStanza( stanza) {
         let type = stanza.name;
 
         switch( type ) {
             case 'message':
-                return Client.parseMessage( stanza, credentials );
+                return Client.parseMessage( stanza);
             case 'presence':
-                return Client.parsePresence( stanza, credentials );
+                return Client.parsePresence( stanza);
         }
     }
 
@@ -170,7 +177,7 @@ class Client {
 	 * @param  {obj} credentials
 	 * @return {obj}
 	 */
-    static parseMessage( stanza, credentials ) {
+    static parseMessage( stanza) {
         let type = 'message';
 		let rateLimited = false;
 		let jid = stanza.attrs.from;
@@ -188,14 +195,15 @@ class Client {
 		let messages = runtime.brain.get( 'userMessages' ) || {};
 		let userMessageLog = messages[ username ];
 
+		// Rate limiting should be in middleware
 		// Don't rate limit the bot
-		if ( username !== credentials.username && userMessageLog ) {
-			let lastCommandTimeExists = userMessageLog.lastCommandTime > 0;
+ /*   if ( username !== credentials.username && userMessageLog ) {*/
+			//let lastCommandTimeExists = userMessageLog.lastCommandTime > 0;
 
-			if ( lastCommandTimeExists && now - userMessageLog.lastCommandTime < 3000 ) { // 3 seconds
-				rateLimited = true;
-			}
-		}
+			//if ( lastCommandTimeExists && now - userMessageLog.lastCommandTime < 3000 ) { // 3 seconds
+				//rateLimited = true;
+			//}
+		/*}*/
 
 		let user = Client.getUser( username );
 
